@@ -1,7 +1,40 @@
 {
   "name": "md-links",
   "version": "0.1.0",
+  "main": "./src/index.js",
+  "bin": {
+    "md-links": "./src/mdLinks.js"
+  },
   "engines": {
     "node": ">=16.x"
+  },
+  "description": "Librería que se especializa en validar links de archivos Markdown ",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paulasofiagc/SCL021-md-links.git"
+  },
+  "author": {
+    "name": "Paula Gallardo Carrasco",
+    "email": "paulasofiagc@gmail.com",
+    "url": "https://www.linkedin.com/in/paulagallardocarrasco"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paulasofiagc/SCL021-md-links/issues"
+  },
+  "homepage": "https://github.com/paulasofiagc/SCL021-md-links#readme",
+  "devDependencies": {
+    "eslint": "^8.24.0",
+    "jest": "^29.1.2"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "node-bin-setup": "^1.1.3"
   }
 }
