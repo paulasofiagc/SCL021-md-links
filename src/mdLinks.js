@@ -1,19 +1,19 @@
 #!/usr/bin/env node
-const {
-    rutExist,
-  convertAbsolutePath,
+/* const { routeExists,
+    checkAbsolutePath,
+    transformToAbsolute,
+    isDirectory
 } = require("./functionbase.js");
 
-const link = process.argv[2];
-const routeCheck = convertAbsolutePath(link);
 const mdLinks = () => {
   return new Promise((resolve, reject) => {
-    if (rutExist(link) == false) {
+    if (routeExists(route) == false) {
       reject("Ruta inválida! 😦");
     } else {
-      routeCheck;
+      ;
     }
   });
 };
 
 mdLinks();
+ */

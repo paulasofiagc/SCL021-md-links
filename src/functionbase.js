@@ -1,41 +1,39 @@
 //file system
 const fs = require("fs");
 const path = require("path");
+// Ver si la ruta existe
+const routeExists = (route) => fs.existsSync(route);
+//Ver si una ruta es relativa
+const checkAbsolutePath = (route) => path.isAbsolute(route);
+/* console.log(path.isAbsolute("/rutescan/prueba.md"));
+console.log(path.isAbsolute("rutescan/tengolinks.md"));
+console.log(path.isAbsolute("/rutescan/soyjs.js")); */
 
-link = process.argv[2];
-// Crea un input en consola para que cliente ingrese la ruta a evaluar
-const getInput = require("readline").createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
-getInput.question("Ingresa tu ruta:", (link) => {
-  const rutExist = (link) =>
-  fs.existsSync(link) === true
-      ? console.log("Ruta ingresada es válida 😍")
-      : console.log("Ruta no es válida 😥");
-  console.log(rutExist(link));
-  getInput.close();
-});
-
-const convertAbsolutePath = (link) => {
-  if (path.isAbsolute(link) === true) {
-    console.log("esto es ruta relativa " + path.resolve(link));
-    return link;
-  } else {
-    return path.resolve(link);
-  }
-};
-/* 
-const validateRute = () => {
-  let myPath = argv[2];
-  if (path.isAbsolute(myPath)) {
-    pathAbsolute = myPath;
-  } else {
-    pathAbsolute = path.resolve(myPath); //convierto la ruta en absoluta
-  }
-}; */
-
+// Transformar la ruta a absoluta
+const transformToAbsolute = (route) => path.resolve(route);
+//se utiliza para devolver información sobre la ruta del archivo dada de forma síncrona
+const isDirectory = (route) =>{
+    const statsFile = fs.statSync(route);
+    if (statsFile.isDirectory()){
+        process.stdout.write("El archivo es directorio! 🥰")
+    }else  {
+        mdFile(route)
+    }
+    };
+/* const isDirectory = (route) => fs.statSync(route).isDirectory(route);
+ */
+//Saber si archivo es md o no
+    const mdFile= (route) => {
+        var ext = path.extname(route);
+        if(ext === ".md"){
+            process.stdout.write('Bingo el archivo es Markdown! ') 
+        } else{
+            process.stdout.write('No puede ser! 😣 No tengo extensión md') 
+        }
+    };
 module.exports = {
-  convertAbsolutePath, rutExist
+    routeExists,
+    checkAbsolutePath,
+    transformToAbsolute,
+    isDirectory
 };
