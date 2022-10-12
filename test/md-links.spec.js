@@ -1,7 +1,11 @@
-/* const {verifyingRouterouteCheck} = require('../src/functionbase.js')
+const {
+  routeExists,
+  checkAbsolutePath,
+  transformToAbsolute,
+  isDirectory,
+} = require("../src/functionbase.js");
 
-
-describe('test in verifyingRouterouteCheck', () => {
+/* describe('test in verifyingRouterouteCheck', () => {
   it('should return "El archivo EXISTE!" for README.md', () => {
     const ruta = '/README.md'
 
@@ -20,4 +24,4 @@ describe('test in verifyingRouterouteCheck', () => {
   });	  });
 
 
-}); */
+});  */
