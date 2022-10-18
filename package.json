@@ -1,9 +1,9 @@
 {
-  "name": "md-links",
+  "name": "mdlinks",
   "version": "0.1.0",
   "main": "./src/index.js",
   "bin": {
-    "md-links": "./src/mdLinks.js"
+    "mdlinks": "./src/mdLinks.js"
   },
   "engines": {
     "node": ">=16.x"

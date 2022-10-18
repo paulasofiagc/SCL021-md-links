@@ -1,7 +1,7 @@
 //file system
 const fs = require("fs");
 const path = require("path");
-// Ver si la ruta existe
+
 const routeExists = (route) => fs.existsSync(route);
 //Ver si una ruta es relativa
 const checkAbsolutePath = (route) => path.isAbsolute(route);
