@@ -1,5 +1,4 @@
-#!/usr/bin/env node
-const {argv} = require('yargs');
+#!/usr/bin/env nod
 const fs = require('fs');
 const path = require('path');
 const colors = require("colors");
