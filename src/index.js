@@ -5,6 +5,7 @@ const { argv } = require("yargs");
 const colors = require("colors");
 const url = require("url");
 const https = require("https");
+const { filterLinks } = require("./functionbase");
 //tercer argumento en consola
 let route = process.argv[2];
 
@@ -26,12 +27,12 @@ const readingDirectory = (route) => {
     });
   });
 };
-const RegExr = /(((https?:\/\/)|(http?:\/\/)|(www\.))[^\s\n]+)(?=\))/g;
+const RegExr = /(((https?:\/\/)|(http?:\/\/)|(www\.))[^\n\s]+)(?=\))/g;
 const returnUrl = (files) => {
   fs.readFile(files, "utf-8", (err, files) => {
     console.log(files);
     const links = files.match(RegExr);
-    console.log({links})
+    console.log({ links });
     const newArray = Array.from(links);
     if (err) {
       console.log(err);
@@ -40,39 +41,95 @@ const returnUrl = (files) => {
     }
   });
 };
-const validateUrls = (ruta) => {
-  fs.readFile(ruta, "utf-8", (err, data) => { // entra al archivo
-      const stringLinks = data.match(RegExr);
-      let arrayStatus = new Array();
-      if (err) {
-          console.log(err);
-      } else {
-          stringLinks.forEach((urlData) => {
-              getHttpStatus(urlData)
-              .then((res) => {
-                if (res.status === 200) {
-                console.log('Status from', urlData, 'is', res.status, 'OK ✓');
-                } else if (res.status === 301) {
-                  console.log('Status from', urlData, 'is', res.status, 'OK ✓');
-                } else if (res.status !== 200) {
-                console.log('Status from', urlData, 'is', res.status, 'FAIL ✕');
-                }
-              })
-              .catch((err) => {
-                console.log(err.code);
-              });
-      });
-      }
+const httpStatus = (route) => {
+  return new Promise((resolve) => {
+    const options = {
+      method: "GET",
+      host: url.parse(route).host,
+      port: 443,
+      path: url.parse(route).pathname,
+    };
+// https.request(options[, callback]) 
+    const app = https.request(options, (res) => {
+      const linkstatus = {
+        linkname: route,
+        Code: res.statusCode,
+        status: res.statusCode,
+      };
+      resolve(linkstatus);
+    });
+
+    app.on("error", (error) => {
+      const dataerr = {
+        linkname: ruta,
+        status: false,
+      };
+      resolve(dataerr);
+    });
+
+    app.end();
   });
-}
-// obtener links
-/* const validate = (route) =>{
+};
+const stats = (route) => {
   fs.readFile(route, "utf-8", (err, data) => {
+    // entra al archivo
     const links = data.match(RegExr);
-  } */
+    let arrayStatus = Array.from(links);
+    let brokenLinks = [];
+    console.log("Total links:".bold.blue, links.length + "😎" );
+
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Links únicos🙄:".bold.magenta, filterLinks(arrayStatus));
+    }
+    links.map((url) => {
+      httpStatus(url)
+        .then((res) => {
+          if (res.status >= 400) {
+            brokenLinks.push(res.status);
+          }
+        })
+        .catch((err) => {
+          console.log(err.code);
+        });
+    });
+    // console.log(data);
+  });
+};
+
+const validate = (route) => {
+  fs.readFile(route, "utf-8", (err, data) => {
+    // entra al archivo
+    const links = data.match(RegExr);
+    let status = new Array();
+    if (err) {
+      console.log(err);
+    } else {
+      links.forEach((url) => {
+        httpStatus(url)
+          .then((res) => {
+            if (res.status === 200) {
+              console.log("El status de".green, url, "es", res.status, "Oki😍".green);
+            } else if (res.status === 301) {
+              console.log("El status de".green, url, "es", res.status, "Okey😎".green);
+            } else if (res.status !== 200) {
+              console.log("El status de".green, url, "es", res.status, "Error😓".red);
+            }
+          })
+          .catch((err) => {
+            console.log(err.code);
+          });
+      });
+    }
+  });
+};
 
 
 module.exports = {
   readingDirectory,
-  returnUrl
+  returnUrl,
+  httpStatus,
+  validate,
+  stats
 };

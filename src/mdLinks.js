@@ -7,7 +7,8 @@ const [, , , ...args] = process.argv
 const route = process.argv[2];
 
 const {
-  readingDirectory, returnUrl
+  readingDirectory, stats, validate
+
 } = require('./index');
 const {
   routeExists,
@@ -23,16 +24,19 @@ if (routeExists(route)) {
     console.log("isDirectory")
     readingDirectory(route);
   } else {
-    console.log("No es directorio")
-    console.log(mdFile(route))
+    console.log("No es directorio 😨".underline.cyan)
+    /* console.log(mdFile(route)) */
       if (mdFile(route)) {
         if (args.includes("--validate" && "--stats")) {
-          console.log('opcion validate y stats');
+          console.log('Pusiste la opcion validate y stats'.random);
+          validate(route);
+          stats(route);
         } else if (args.includes("--validate")) {
-          returnUrl(route)
-          console.log('opcion validate');
-        } else if (argv.stats) {
-          console.log('opcion stats');
+          console.log('Pusiste la opcion validate'.underline.bold.blue);
+          validate(route)
+        } else if(args.includes("--stats")) {
+          console.log('Pusiste la opcion stats');
+          stats(route)
         } 
       } else {
           console.log('El archivo no es Markdown 🤔')
