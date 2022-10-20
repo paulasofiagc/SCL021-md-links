@@ -1,17 +1,18 @@
 /* const readline = require("readline"); */
 const fs = require("fs");
 const path = require("path");
-const { argv } = require("yargs");
 const colors = require("colors");
 const url = require("url");
 const https = require("https");
 const { filterLinks } = require("./functionbase");
+const { ok } = require("assert");
 //tercer argumento en consola
 let route = process.argv[2];
 
 // El método fs.readdir() se utiliza para leer de forma asíncrona el contenido de un directorio determinado. La devolución de llamada de este método devuelve una matriz de todos los nombres de archivo en el directorio.
 const readingDirectory = (route) => {
   return new Promise((resolve, reject) => {
+    const foundFiles = [];
     fs.readdir(route, (error, data) => {
       if (error) {
         return reject(error);
@@ -49,7 +50,7 @@ const httpStatus = (route) => {
       port: 443,
       path: url.parse(route).pathname,
     };
-// https.request(options[, callback]) 
+    // https.request(options[, callback])
     const app = https.request(options, (res) => {
       const linkstatus = {
         linkname: route,
@@ -72,12 +73,10 @@ const httpStatus = (route) => {
 };
 const stats = (route) => {
   fs.readFile(route, "utf-8", (err, data) => {
-    // entra al archivo
     const links = data.match(RegExr);
     let arrayStatus = Array.from(links);
     let brokenLinks = [];
-    console.log("Total links:".bold.blue, links.length + "😎" );
-
+    console.log("Total links:".bold.blue, links.length + "😎");
     if (err) {
       console.log(err);
     } else {
@@ -86,12 +85,13 @@ const stats = (route) => {
     links.map((url) => {
       httpStatus(url)
         .then((res) => {
+          console.log({ res });
           if (res.status >= 400) {
             brokenLinks.push(res.status);
           }
         })
         .catch((err) => {
-          console.log(err.code);
+          console.log("error http", err.code);
         });
     });
     // console.log(data);
@@ -103,33 +103,65 @@ const validate = (route) => {
     // entra al archivo
     const links = data.match(RegExr);
     let status = new Array();
+    let valid = 0;
+    let broken = 0;
     if (err) {
       console.log(err);
     } else {
-      links.forEach((url) => {
+      links.forEach((url, index) => {
+        if(url.status){
+          valid += 1;
+        } else{
+          broken += 1;
+        }
         httpStatus(url)
           .then((res) => {
             if (res.status === 200) {
-              console.log("El status de".green, url, "es", res.status, "Oki😍".green);
+              console.log(
+                "La ruta es ".black,
+                route,
+                "El status de la url".green,
+                url,
+                "es",
+                res.status,
+                "Ok😍".green
+              );
             } else if (res.status === 301) {
-              console.log("El status de".green, url, "es", res.status, "Okey😎".green);
+              console.log(
+                "La ruta es ".black,
+                route,
+                "El status de la url".green,
+                url,
+                "es",
+                res.status,
+                "Ok😎".green
+              );
             } else if (res.status !== 200) {
-              console.log("El status de".green, url, "es", res.status, "Error😓".red);
+              console.log(
+                "La ruta es ".black,
+                route,
+                "El status de la url".green,
+                url,
+                "es",
+                res.status,
+                "Fail😓".red
+              );
             }
           })
           .catch((err) => {
             console.log(err.code);
           });
       });
+      console.log("Links rotos", broken)
+
     }
   });
 };
-
 
 module.exports = {
   readingDirectory,
   returnUrl,
   httpStatus,
   validate,
-  stats
+  stats,
 };

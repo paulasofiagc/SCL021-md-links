@@ -9,9 +9,10 @@ const transformToAbsolute = (route) => path.resolve(route);
 //se utiliza para devolver información sobre la ruta del archivo dada de forma síncrona
 const isDirectory = (route) => fs.statSync(route).isDirectory(route);
 // Para filtrar el largo de array
-const filterLinks = (links) => links.filter((v, i, a) => a.indexOf(v) === i).length;
+const filterLinks = (links) =>
+  links.filter((a, i, e) => e.indexOf(a) === i).length;
 // Para saber si tiene extensión md
-const mdFile= (route) => path.extname(route) === '.md';
+const mdFile = (route) => path.extname(route) === ".md";
 
 module.exports = {
   routeExists,
@@ -19,5 +20,5 @@ module.exports = {
   transformToAbsolute,
   isDirectory,
   mdFile,
-  filterLinks
+  filterLinks,
 };
