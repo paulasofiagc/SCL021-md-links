@@ -9,6 +9,7 @@
     - [Instalación desde la terminal](#instalación-desde-la-terminal)
     - [Formas de Uso ✨](#formas-de-uso-)
   - [4. Ejemplos de uso](#4-ejemplos-de-uso)
+    -[Opciones](#opciones) 
 
 ## 1. Resumen del Proyecto ✏
 Librería desarrollada en node.js para verificar URL dentro de archivos con Markdown (extensión.md). Las principales funcionalidades de la librería son: 
@@ -41,6 +42,7 @@ Nos muestra en consola los links, con su status.
 ![Validate](img/Validate.png)
 
 
+**También puedes usar el comando**
 ```sh
 $ mdsearch [la_ruta_que_quieres_analizar] -- validate
 ```
@@ -52,17 +54,19 @@ Estadística básica de los links
 ![stats](img/STATS.png)
 
 
+**También puedes usar el comando**
 ```sh
 $ mdsearch [la_ruta_que_quieres_analizar] -- validate
 ```
-`--stats`
+
 
 `--validate --stats`
 Permitirá ejecutar ambas opciones.
 
 ![ValidateyStats](img/Validate%20stats.png)
 
+
+**También puedes usar el comando**
 ```sh
 $ mdsearch [la_ruta_que_quieres_analizar] -- validate --stats
 ```
-`--stats`
