@@ -27,7 +27,8 @@ if (routeExists(route)) {
         console.log("Pusiste la opcion validate y stats".random);
         validate(route);
         stats(route);
-      } else if (args.includes("--validate")) {
+      } else
+       if (args.includes("--validate")) {
         console.log("Pusiste la opcion validate".underline.bold.blue);
         validate(route);
       } else if (args.includes("--stats")) {

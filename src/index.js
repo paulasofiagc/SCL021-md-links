@@ -85,9 +85,9 @@ const stats = (route) => {
     links.map((url) => {
       httpStatus(url)
         .then((res) => {
-          console.log({ res });
           if (res.status >= 400) {
             brokenLinks.push(res.status);
+
           }
         })
         .catch((err) => {
@@ -103,17 +103,10 @@ const validate = (route) => {
     // entra al archivo
     const links = data.match(RegExr);
     let status = new Array();
-    let valid = 0;
-    let broken = 0;
     if (err) {
       console.log(err);
     } else {
       links.forEach((url, index) => {
-        if(url.status){
-          valid += 1;
-        } else{
-          broken += 1;
-        }
         httpStatus(url)
           .then((res) => {
             if (res.status === 200) {
@@ -147,13 +140,12 @@ const validate = (route) => {
                 "Fail😓".red
               );
             }
+
           })
           .catch((err) => {
             console.log(err.code);
           });
       });
-      console.log("Links rotos", broken)
-
     }
   });
 };
