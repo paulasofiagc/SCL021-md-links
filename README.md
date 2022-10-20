@@ -37,10 +37,32 @@ src/mdLinks.js [TURUTA] [OPCIÓN]
 ### Opciones 
 `--validate`
 Nos muestra en consola los links, con su status. 
+
 ![Validate](img/Validate.png)
+
+
+```sh
+$ mdsearch [la_ruta_que_quieres_analizar] -- validate
+```
+
+
 `--stats`
 Estadística básica de los links
+
 ![stats](img/STATS.png)
+
+
+```sh
+$ mdsearch [la_ruta_que_quieres_analizar] -- validate
+```
+`--stats`
+
 `--validate --stats`
 Permitirá ejecutar ambas opciones.
+
 ![ValidateyStats](img/Validate%20stats.png)
+
+```sh
+$ mdsearch [la_ruta_que_quieres_analizar] -- validate --stats
+```
+`--stats`
