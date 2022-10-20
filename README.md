@@ -9,7 +9,8 @@
     - [Instalación desde la terminal](#instalación-desde-la-terminal)
     - [Formas de Uso ✨](#formas-de-uso-)
   - [4. Ejemplos de uso](#4-ejemplos-de-uso)
-    -[Opciones](#opciones) 
+    - [Opciones](#opciones) 
+  - [5. Planificación en Trello del Proyecto](#5-planificación-en-trello-del-proyecto)
 
 ## 1. Resumen del Proyecto ✏
 Librería desarrollada en node.js para verificar URL dentro de archivos con Markdown (extensión.md). Las principales funcionalidades de la librería son: 
@@ -27,7 +28,9 @@ Ser una herramienta que ayuda mucho, ya que, los archivos Markdown que contienen
 Node.js
 ```
 ### Instalación desde la terminal
-
+```sh
+mefalta la publicación en npm
+```
 ### Formas de Uso ✨
 Luego de la instalación, puedes usarla con el comando `mdsearch` en la terminal. Además, debes agregar la ruta del archivo o directorio. Te dejo unos ejemplos de uso aquí abajo.
 
@@ -56,7 +59,7 @@ Estadística básica de los links
 
 **También puedes usar el comando**
 ```sh
-$ mdsearch [la_ruta_que_quieres_analizar] -- validate
+$ mdsearch [la_ruta_que_quieres_analizar] -- stats
 ```
 
 
@@ -70,3 +73,6 @@ Permitirá ejecutar ambas opciones.
 ```sh
 $ mdsearch [la_ruta_que_quieres_analizar] -- validate --stats
 ```
+## 5. Planificación en Trello del Proyecto
+
+![Trello](img/Trello.png)
