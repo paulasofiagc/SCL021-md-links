@@ -2,7 +2,7 @@
 const fs = require("fs");
 const path = require("path");
 const routeExists = (route) => fs.existsSync(route);
-//Ver si una ruta es relativa
+//Ver si una ruta es absoluta
 const checkAbsolutePath = (route) => path.isAbsolute(route);
 // Transformar la ruta a absoluta
 const transformToAbsolute = (route) => path.resolve(route);

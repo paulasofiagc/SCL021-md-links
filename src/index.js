@@ -4,11 +4,10 @@ const colors = require("colors");
 const url = require("url");
 const https = require("https");
 const { filterLinks } = require("./functionbase");
-const { ok } = require("assert");
 //tercer argumento en consola
 let route = process.argv[2];
 
-// El método fs.readdir() se utiliza para leer de forma asíncrona el contenido de un directorio determinado. La devolución de llamada de este método devuelve una matriz de todos los nombres de archivo en el directorio.
+// El método fs.readdir() se utiliza para leer de forma asíncrona el contenido de un directorio
 const readingDirectory = (route) => {
   return new Promise((resolve, reject) => {
     const foundFiles = [];
@@ -27,6 +26,7 @@ const readingDirectory = (route) => {
     });
   });
 };
+//leer archivos
 const RegExr = /(((https?:\/\/)|(http?:\/\/)|(www\.))[^\n\s]+)(?=\))/g;
 const returnUrl = (files) => {
   fs.readFile(files, "utf-8", (err, files) => {
@@ -45,11 +45,14 @@ const httpStatus = (route) => {
   return new Promise((resolve) => {
     const options = {
       method: "GET",
+      //Obtiene y establece la parte del host de la dirección URL.
       host: url.parse(route).host,
       port: 443,
+      //La pathname propiedad consta de la sección de ruta completa de la URL. Esto es todo lo que sigue a host(incluido el port) y antes del inicio de los
       path: url.parse(route).pathname,
     };
     // https.request(options[, callback])
+    //La función res.status() establece el estado HTTP para la respuesta. Es un alias encadenable de response.statusCode de Node.
     const app = https.request(options, (res) => {
       const linkstatus = {
         linkname: route,
@@ -61,7 +64,7 @@ const httpStatus = (route) => {
 
     app.on("error", (error) => {
       const dataerr = {
-        linkname: ruta,
+        linkname: route,
         status: false,
       };
       resolve(dataerr);
@@ -86,7 +89,6 @@ const stats = (route) => {
         .then((res) => {
           if (res.status >= 400) {
             brokenLinks.push(res.status);
-
           }
         })
         .catch((err) => {
@@ -101,7 +103,7 @@ const validate = (route) => {
   fs.readFile(route, "utf-8", (err, data) => {
     // entra al archivo
     const links = data.match(RegExr);
-    let status = new Array();
+    let status = [];
     if (err) {
       console.log(err);
     } else {
@@ -139,7 +141,6 @@ const validate = (route) => {
                 "Fail😓".red
               );
             }
-
           })
           .catch((err) => {
             console.log(err.code);
